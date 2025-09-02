@@ -1,0 +1,3 @@
+#!/bin/bash
+# Validate commit message format
+npx commitlint --edit $1

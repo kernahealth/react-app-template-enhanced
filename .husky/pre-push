@@ -1,0 +1,24 @@
+#!/bin/bash
+# Run unit tests
+npm run test:ci
+if [ $? -ne 0 ]; then
+  echo "❌ Unit tests failed. Push aborted."
+  exit 1
+fi
+
+# Run e2e tests
+npm run test:e2e
+if [ $? -ne 0 ]; then
+  echo "❌ E2E tests failed. Push aborted."
+  exit 1
+fi
+
+# Run comprehensive security scan
+echo "🔒 Running comprehensive security scan..."
+npm run security:scan
+if [ $? -ne 0 ]; then
+  echo "❌ Security scan failed. Push aborted."
+  exit 1
+fi
+
+echo "✅ All tests and security scans passed. Push allowed."

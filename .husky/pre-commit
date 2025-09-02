@@ -1,0 +1,12 @@
+#!/bin/bash
+# Run lint-staged for formatting and linting
+npx lint-staged
+
+# Run security scan for HIGH and CRITICAL vulnerabilities
+echo "🔒 Running security scan..."
+npm run security:deps
+if [ $? -ne 0 ]; then
+  echo "❌ Security scan failed. High/Critical vulnerabilities found. Commit aborted."
+  exit 1
+fi
+echo "✅ Security scan passed."
