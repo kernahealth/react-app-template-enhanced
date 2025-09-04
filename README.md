@@ -21,7 +21,7 @@ A comprehensive, production-ready React application template with modern develop
 
    ```bash
    # Using GitHub CLI
-   gh repo create my-new-app --template=kernahealth/react-app-template --clone --private
+   gh repo create kernahealth/my-new-app --template=kernahealth/react-app-template --clone --private
    ```
 
 2. **Clone and setup:**
