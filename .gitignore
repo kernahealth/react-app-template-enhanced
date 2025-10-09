@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+.env
+.env.*
+!.env.example
+
 # Test coverage and reports
 coverage/
 test-results/
@@ -32,3 +37,6 @@ trivy-report.json
 *.njsproj
 *.sln
 *.sw?
+.claude
+.serena
+CLAUDE.md
