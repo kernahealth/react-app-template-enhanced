@@ -1,8 +1,10 @@
-# 🚀 Enterprise React App Template
+# 🚀 Enterprise React App Template - Enhanced
 
-A comprehensive, production-ready React application template with modern development tools, testing frameworks, security scanning, and enforced code quality standards.
+A comprehensive, production-ready React application template with modern development tools, testing frameworks, security scanning, and enhanced state management and API tooling.
 
 ## ✨ Features
+
+### Core Features
 
 - **⚛️ React 19** with **TypeScript** and **Vite** for fast development
 - **🧪 Complete Testing Suite**: Jest unit tests + Playwright E2E tests
@@ -12,6 +14,18 @@ A comprehensive, production-ready React application template with modern develop
 - **📋 Conventional Commits**: Enforced commit message standards with guided workflow
 - **♿ Accessibility**: Built-in a11y linting rules
 - **📦 Production Optimized**: Ready for deployment with CDK template
+
+### Enhanced Features (This Branch)
+
+- **🔄 TanStack Query (React Query)**: Powerful data fetching and caching with devtools
+- **🪝 Custom Hooks Pattern**: Domain-specific hooks using baseQuery utilities for consistent API patterns
+- **🏪 Zustand**: Lightweight state management with persistence and devtools
+- **🎭 MSW (Mock Service Worker)**: API mocking for development and testing
+- **🌐 React Router DOM**: Client-side routing with example pages
+- **🔌 Axios**: Promise-based HTTP client for API requests
+- **🔔 Sonner**: Beautiful toast notifications with global error handling
+- **📋 React Hook Form + Zod**: Type-safe form validation with excellent DX
+- **⚡ Optimized Query Client**: Pre-configured with smart caching and retry strategies
 
 ## 🚀 Quick Start
 
@@ -24,10 +38,11 @@ A comprehensive, production-ready React application template with modern develop
    gh repo create kernahealth/my-new-app --template=kernahealth/react-app-template --clone --private
    ```
 
-2. **Clone and setup:**
+   > **Note:** This template has two branches - `main` (minimal setup) and `enhanced` (includes all features like React Hook Form, Zod, Contact page, etc.). The template will clone the default branch. Switch to `enhanced` for all features: `git checkout enhanced`
+
+2. **Install dependencies:**
 
    ```bash
-   cd my-new-app
    npm install
    ```
 
@@ -183,13 +198,53 @@ npm run commit
 
 ```
 ├── src/
-│   ├── App.tsx              # Main application component
+│   ├── App.tsx              # Main application component with routes
 │   ├── App.test.tsx         # Unit tests
-│   ├── main.tsx             # Application entry point
+│   ├── main.tsx             # Application entry point with providers
 │   ├── setupTests.ts        # Test configuration
+│   ├── components/
+│   │   ├── ErrorBoundary.tsx  # Error boundary components
+│   │   ├── Layout.tsx       # Layout wrapper with navigation
+│   │   └── Navbar.tsx       # Navigation bar component
+│   ├── hooks/
+│   │   └── useUsers.ts      # Custom hooks for user management (uses baseQuery)
+│   ├── lib/
+│   │   ├── queryClient.ts   # TanStack Query configuration
+│   │   └── baseQuery.ts     # Base query/mutation hooks and utilities
+│   ├── mocks/
+│   │   ├── handlers/        # Organized MSW handlers by domain
+│   │   │   ├── userHandlers.ts   # User CRUD endpoints
+│   │   │   ├── orderHandlers.ts  # Order CRUD endpoints
+│   │   │   ├── miscHandlers.ts   # Utility endpoints
+│   │   │   ├── user.types.ts     # User type definitions
+│   │   │   ├── order.types.ts    # Order type definitions
+│   │   │   ├── common.types.ts   # Shared type definitions
+│   │   │   ├── types.ts          # Re-exports all types
+│   │   │   ├── utils.ts          # Handler utilities
+│   │   │   ├── index.ts          # Handler exports
+│   │   │   └── README.md         # Handler documentation
+│   │   ├── handlers.ts      # Re-exports all handlers
+│   │   └── browser.ts       # MSW browser setup
+│   ├── pages/
+│   │   ├── Home.tsx         # Home page with Zustand counter
+│   │   ├── About.tsx        # About page
+│   │   ├── Users.tsx        # Users management page (uses useUsers hooks)
+│   │   ├── Contact.tsx      # Contact page with form validation (react-hook-form + Zod)
+│   │   └── NotFound.tsx     # 404 page component
+│   ├── schemas/
+│   │   └── contactSchema.ts # Zod validation schemas for forms
+│   ├── services/
+│   │   ├── apiClient.ts     # Axios HTTP client wrapper
+│   │   └── userService.ts   # User CRUD operations service
+│   ├── stores/
+│   │   └── exampleStore.ts  # Zustand example store (counter)
+│   ├── types/
+│   │   └── user.ts          # User type definitions and interfaces
 │   └── ...
 ├── e2e/
 │   └── app.spec.ts          # E2E test specs
+├── public/
+│   └── mockServiceWorker.js # MSW service worker
 ├── .husky/
 │   ├── pre-commit           # Pre-commit hook
 │   ├── pre-push            # Pre-push hook
@@ -197,7 +252,7 @@ npm run commit
 ├── coverage/                # Test coverage reports
 ├── playwright-report/       # E2E test reports
 ├── commitlint.config.js     # Commit message rules
-├── eslint.config.js         # Linting configuration
+├── eslint.config.js         # Linting configuration (includes TanStack Query plugin)
 ├── jest.config.js           # Unit test configuration
 ├── playwright.config.ts     # E2E test configuration
 ├── .prettierrc             # Code formatting rules
@@ -267,6 +322,8 @@ To improve this template for your organization:
 
 ## 📚 Additional Resources
 
+### Core
+
 - [React Documentation](https://react.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Vite Guide](https://vitejs.dev/guide/)
@@ -275,6 +332,17 @@ To improve this template for your organization:
 - [Conventional Commits](https://conventionalcommits.org/)
 - [ESLint Rules](https://eslint.org/docs/rules/)
 - [Trivy Security Scanner](https://trivy.dev/)
+
+### Enhanced Features
+
+- [TanStack Query Docs](https://tanstack.com/query/latest)
+- [Zustand Documentation](https://zustand-demo.pmnd.rs/)
+- [MSW Documentation](https://mswjs.io/)
+- [React Router Documentation](https://reactrouter.com/)
+- [Axios Documentation](https://axios-http.com/)
+- [Sonner Toast Library](https://sonner.emilkowal.ski/)
+- [React Hook Form Documentation](https://react-hook-form.com/)
+- [Zod Documentation](https://zod.dev/)
 
 ## 🆘 Troubleshooting
 
