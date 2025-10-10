@@ -38,11 +38,10 @@ A comprehensive, production-ready React application template with modern develop
    gh repo create kernahealth/my-new-app --template=kernahealth/react-app-template --clone --private
    ```
 
-   > **Note:** This template has two branches - `main` (minimal setup) and `enhanced` (includes all features like React Hook Form, Zod, Contact page, etc.). The template will clone the default branch. Switch to `enhanced` for all features: `git checkout enhanced`
-
 2. **Install dependencies:**
 
    ```bash
+   cd my-new-app
    npm install
    ```
 
