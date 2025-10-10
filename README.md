@@ -55,7 +55,16 @@ A comprehensive, production-ready React application template with modern develop
    # Update the app title and content in src/App.tsx
    ```
 
-4. **Start development:**
+4. **Configure environment variables:**
+
+   ```bash
+   # Create .env file from example
+   cp .env.example .env
+   ```
+
+   > **Note:** Review and update `.env` with your specific configuration values.
+
+5. **Start development:**
    ```bash
    npm run dev
    ```
