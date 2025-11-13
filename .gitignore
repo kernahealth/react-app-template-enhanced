@@ -22,6 +22,7 @@ coverage/
 test-results/
 playwright-report/
 results.xml
+junit.xml
 
 # Security reports
 trivy-report.json

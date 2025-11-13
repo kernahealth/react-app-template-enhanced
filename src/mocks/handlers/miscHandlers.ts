@@ -8,7 +8,7 @@ export const miscHandlers = [
    * GET /api/error
    * Example error endpoint for testing error handling
    */
-  http.get('/api/error', () => {
+  http.get('*/api/error', () => {
     return HttpResponse.json(
       {
         message: 'Internal server error',
@@ -22,7 +22,7 @@ export const miscHandlers = [
    * GET /api/health
    * Health check endpoint
    */
-  http.get('/api/health', () => {
+  http.get('*/api/health', () => {
     return HttpResponse.json({
       status: 'ok',
       timestamp: new Date().toISOString(),

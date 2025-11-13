@@ -1,3 +1,4 @@
+import { vi, type Mock } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { type ReactNode, createElement } from 'react';
@@ -13,13 +14,13 @@ import {
 import type { User, UsersResponse, BulkDeleteResponse } from '../types/user';
 
 // Mock the userService
-jest.mock('../services/userService');
+vi.mock('../services/userService');
 
 // Mock sonner toast
-jest.mock('sonner', () => ({
+vi.mock('sonner', () => ({
   toast: {
-    success: jest.fn(),
-    error: jest.fn(),
+    success: vi.fn(),
+    error: vi.fn(),
   },
 }));
 
@@ -57,7 +58,7 @@ const createWrapper = () => {
 
 describe('useUsers hooks', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useGetUsers', () => {
@@ -85,7 +86,7 @@ describe('useUsers hooks', () => {
         },
       };
 
-      (userService.getUsers as jest.Mock).mockResolvedValue(mockResponse);
+      (userService.getUsers as Mock).mockResolvedValue(mockResponse);
 
       const { result } = renderHook(() => useGetUsers(), {
         wrapper: createWrapper(),
@@ -112,7 +113,7 @@ describe('useUsers hooks', () => {
         },
       };
 
-      (userService.getUsers as jest.Mock).mockResolvedValue(mockResponse);
+      (userService.getUsers as Mock).mockResolvedValue(mockResponse);
 
       const queryParams = { search: 'john', role: 'admin' as const };
 
@@ -139,7 +140,7 @@ describe('useUsers hooks', () => {
         },
       };
 
-      (userService.getUsers as jest.Mock).mockResolvedValue(mockResponse);
+      (userService.getUsers as Mock).mockResolvedValue(mockResponse);
 
       const queryParams = { page: 2, limit: 10 };
 
@@ -154,7 +155,7 @@ describe('useUsers hooks', () => {
 
     it('handles errors', async () => {
       const error = new Error('Failed to fetch users');
-      (userService.getUsers as jest.Mock).mockRejectedValue(error);
+      (userService.getUsers as Mock).mockRejectedValue(error);
 
       const { result } = renderHook(() => useGetUsers(), {
         wrapper: createWrapper(),
@@ -172,7 +173,7 @@ describe('useUsers hooks', () => {
     it('fetches a single user successfully', async () => {
       const mockUser = createMockUser();
 
-      (userService.getUserById as jest.Mock).mockResolvedValue(mockUser);
+      (userService.getUserById as Mock).mockResolvedValue(mockUser);
 
       const { result } = renderHook(() => useGetUserById('1'), {
         wrapper: createWrapper(),
@@ -216,7 +217,7 @@ describe('useUsers hooks', () => {
         email: 'new@example.com',
       });
 
-      (userService.createUser as jest.Mock).mockResolvedValue(newUser);
+      (userService.createUser as Mock).mockResolvedValue(newUser);
 
       const { result } = renderHook(() => useCreateUser(), {
         wrapper: createWrapper(),
@@ -247,9 +248,9 @@ describe('useUsers hooks', () => {
         email: 'new@example.com',
       });
 
-      (userService.createUser as jest.Mock).mockResolvedValue(newUser);
+      (userService.createUser as Mock).mockResolvedValue(newUser);
 
-      const onSuccess = jest.fn();
+      const onSuccess = vi.fn();
 
       const { result } = renderHook(() => useCreateUser({ onSuccess }), {
         wrapper: createWrapper(),
@@ -273,7 +274,7 @@ describe('useUsers hooks', () => {
 
     it('handles errors', async () => {
       const error = new Error('Failed to create user');
-      (userService.createUser as jest.Mock).mockRejectedValue(error);
+      (userService.createUser as Mock).mockRejectedValue(error);
 
       const { result } = renderHook(() => useCreateUser(), {
         wrapper: createWrapper(),
@@ -301,7 +302,7 @@ describe('useUsers hooks', () => {
         role: 'admin',
       });
 
-      (userService.updateUser as jest.Mock).mockResolvedValue(updatedUser);
+      (userService.updateUser as Mock).mockResolvedValue(updatedUser);
 
       const { result } = renderHook(() => useUpdateUser(), {
         wrapper: createWrapper(),
@@ -335,9 +336,9 @@ describe('useUsers hooks', () => {
         role: 'admin',
       });
 
-      (userService.updateUser as jest.Mock).mockResolvedValue(updatedUser);
+      (userService.updateUser as Mock).mockResolvedValue(updatedUser);
 
-      const onSuccess = jest.fn();
+      const onSuccess = vi.fn();
 
       const { result } = renderHook(() => useUpdateUser({ onSuccess }), {
         wrapper: createWrapper(),
@@ -365,7 +366,7 @@ describe('useUsers hooks', () => {
 
   describe('useDeleteUser', () => {
     it('deletes a user successfully', async () => {
-      (userService.deleteUser as jest.Mock).mockResolvedValue(undefined);
+      (userService.deleteUser as Mock).mockResolvedValue(undefined);
 
       const { result } = renderHook(() => useDeleteUser(), {
         wrapper: createWrapper(),
@@ -381,9 +382,9 @@ describe('useUsers hooks', () => {
     });
 
     it('calls onSuccess callback', async () => {
-      (userService.deleteUser as jest.Mock).mockResolvedValue(undefined);
+      (userService.deleteUser as Mock).mockResolvedValue(undefined);
 
-      const onSuccess = jest.fn();
+      const onSuccess = vi.fn();
 
       const { result } = renderHook(() => useDeleteUser({ onSuccess }), {
         wrapper: createWrapper(),
@@ -400,9 +401,9 @@ describe('useUsers hooks', () => {
 
     it('calls onError callback on failure', async () => {
       const error = new Error('Failed to delete user');
-      (userService.deleteUser as jest.Mock).mockRejectedValue(error);
+      (userService.deleteUser as Mock).mockRejectedValue(error);
 
-      const onError = jest.fn();
+      const onError = vi.fn();
 
       const { result } = renderHook(() => useDeleteUser({ onError }), {
         wrapper: createWrapper(),
@@ -428,9 +429,7 @@ describe('useUsers hooks', () => {
         deletedCount: 3,
       };
 
-      (userService.bulkDeleteUsers as jest.Mock).mockResolvedValue(
-        mockResponse
-      );
+      (userService.bulkDeleteUsers as Mock).mockResolvedValue(mockResponse);
 
       const { result } = renderHook(() => useBulkDeleteUsers(), {
         wrapper: createWrapper(),
@@ -452,11 +451,9 @@ describe('useUsers hooks', () => {
         deletedCount: 2,
       };
 
-      (userService.bulkDeleteUsers as jest.Mock).mockResolvedValue(
-        mockResponse
-      );
+      (userService.bulkDeleteUsers as Mock).mockResolvedValue(mockResponse);
 
-      const onSuccess = jest.fn();
+      const onSuccess = vi.fn();
 
       const { result } = renderHook(() => useBulkDeleteUsers({ onSuccess }), {
         wrapper: createWrapper(),
@@ -476,7 +473,7 @@ describe('useUsers hooks', () => {
 
     it('handles errors during bulk delete', async () => {
       const error = new Error('Failed to bulk delete users');
-      (userService.bulkDeleteUsers as jest.Mock).mockRejectedValue(error);
+      (userService.bulkDeleteUsers as Mock).mockRejectedValue(error);
 
       const { result } = renderHook(() => useBulkDeleteUsers(), {
         wrapper: createWrapper(),

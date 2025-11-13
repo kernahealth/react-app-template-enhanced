@@ -21,7 +21,7 @@ class ApiClient {
 
   constructor(baseUrl?: string) {
     this.axiosInstance = axios.create({
-      baseURL: baseUrl || process.env.VITE_API_BASE_URL || '',
+      baseURL: baseUrl || import.meta.env.VITE_API_BASE_URL || '',
       timeout: 30000, // 30 seconds
       headers: {
         'Content-Type': 'application/json',

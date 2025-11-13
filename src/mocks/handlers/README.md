@@ -160,6 +160,30 @@ import type { User, Order, OrderItem } from './mocks/handlers';
 import { generateId, delay } from './mocks/handlers';
 ```
 
+## Important: URL Pattern Matching
+
+**All handlers MUST use the wildcard `*` prefix** in their endpoint patterns:
+
+```typescript
+// ✅ CORRECT - Works with base URLs
+http.get('*/api/users', async ({ request }) => { ... })
+
+// ❌ WRONG - Won't intercept requests with base URLs
+http.get('/api/users', async ({ request }) => { ... })
+```
+
+### Why?
+
+The app uses `VITE_API_BASE_URL` from `.env` (e.g., `https://api.example.com`). When your code calls:
+
+```typescript
+apiClient.get('/api/users');
+```
+
+Axios sends the full URL: `https://api.example.com/api/users`
+
+Without the `*` wildcard, MSW tries to match the exact path `/api/users` and fails to intercept requests with full URLs. The `*` wildcard tells MSW to match any URL ending with `/api/users`, regardless of the base URL.
+
 ## Adding New Handlers
 
 To add a new resource type (e.g., "products"):
@@ -187,7 +211,8 @@ To add a new resource type (e.g., "products"):
    ];
 
    export const productHandlers = [
-     http.get('/api/products', async ({ request }) => {
+     // NOTE: Always use */ prefix for compatibility with base URLs
+     http.get('*/api/products', async ({ request }) => {
        // implementation
      }),
      // ... other handlers
@@ -243,12 +268,9 @@ Adds realistic API delay simulation. Default is 500ms.
 await delay(300); // Wait 300ms before responding
 ```
 
-## Testing
+## Using Handlers
 
-The handlers are automatically used in:
-
-- Jest unit tests (via `src/setupTests.ts`)
-- Development mode (via `src/main.tsx`)
+The handlers are automatically used in development mode (via `src/main.tsx`).
 
 To test a specific endpoint:
 
@@ -258,6 +280,11 @@ import { userService } from './services/userService';
 // This will use the mock handlers
 const users = await userService.getUsers();
 ```
+
+**Note:** Unit tests (Vitest) do not currently use MSW handlers. Tests mock at the service layer using `vi.mock()`. To add MSW to unit tests or E2E tests, see:
+
+- [MSW + Vitest Quick Start](https://mswjs.io/docs/quick-start) (complete setup example)
+- [MSW + Playwright integration](https://playwright.dev/docs/mock#mock-apis)
 
 ## Response Format
 
