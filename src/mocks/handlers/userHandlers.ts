@@ -40,7 +40,7 @@ export const userHandlers = [
    * GET /api/users
    * List all users with optional filtering and pagination
    */
-  http.get('/api/users', async ({ request }) => {
+  http.get('*/api/users', async ({ request }) => {
     await delay(300);
 
     const url = new URL(request.url);
@@ -85,7 +85,7 @@ export const userHandlers = [
    * GET /api/users/:id
    * Get a single user by ID
    */
-  http.get('/api/users/:id', async ({ params }) => {
+  http.get('*/api/users/:id', async ({ params }) => {
     await delay(200);
 
     const { id } = params;
@@ -108,7 +108,7 @@ export const userHandlers = [
    * POST /api/users
    * Create a new user
    */
-  http.post('/api/users', async ({ request }) => {
+  http.post('*/api/users', async ({ request }) => {
     await delay(400);
 
     const body = (await request.json()) as Partial<User>;
@@ -154,7 +154,7 @@ export const userHandlers = [
    * PUT /api/users/:id
    * Replace a user (full update)
    */
-  http.put('/api/users/:id', async ({ params, request }) => {
+  http.put('*/api/users/:id', async ({ params, request }) => {
     await delay(400);
 
     const { id } = params;
@@ -214,7 +214,7 @@ export const userHandlers = [
    * PATCH /api/users/:id
    * Update a user (partial update)
    */
-  http.patch('/api/users/:id', async ({ params, request }) => {
+  http.patch('*/api/users/:id', async ({ params, request }) => {
     await delay(400);
 
     const { id } = params;
@@ -265,7 +265,7 @@ export const userHandlers = [
    * DELETE /api/users/:id
    * Delete a user
    */
-  http.delete('/api/users/:id', async ({ params }) => {
+  http.delete('*/api/users/:id', async ({ params }) => {
     await delay(300);
 
     const { id } = params;
@@ -295,7 +295,7 @@ export const userHandlers = [
    * DELETE /api/users
    * Bulk delete users
    */
-  http.delete('/api/users', async ({ request }) => {
+  http.delete('*/api/users', async ({ request }) => {
     await delay(400);
 
     const body = (await request.json()) as { ids: string[] };

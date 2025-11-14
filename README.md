@@ -7,7 +7,7 @@ A comprehensive, production-ready React application template with modern develop
 ### Core Features
 
 - **⚛️ React 19** with **TypeScript** and **Vite** for fast development
-- **🧪 Complete Testing Suite**: Jest unit tests + Playwright E2E tests
+- **🧪 Complete Testing Suite**: Vitest unit tests + Playwright E2E tests
 - **🔒 Security Scanning**: Trivy integration for vulnerability detection
 - **📝 Code Quality**: ESLint + Prettier with comprehensive rules
 - **🎯 Git Hooks**: Automated formatting, linting, testing, and security checks
@@ -166,7 +166,7 @@ npm run commit
 
 ## 🧪 Testing Strategy
 
-### Unit Tests (Jest + Testing Library)
+### Unit Tests (Vitest + Testing Library)
 
 - Located in `src/` alongside components
 - Filename pattern: `*.test.tsx`
@@ -209,7 +209,6 @@ npm run commit
 │   ├── App.tsx              # Main application component with routes
 │   ├── App.test.tsx         # Unit tests
 │   ├── main.tsx             # Application entry point with providers
-│   ├── setupTests.ts        # Test configuration
 │   ├── components/
 │   │   ├── ErrorBoundary.tsx  # Error boundary components
 │   │   ├── Layout.tsx       # Layout wrapper with navigation
@@ -259,9 +258,10 @@ npm run commit
 │   └── commit-msg          # Commit message validation
 ├── coverage/                # Test coverage reports
 ├── playwright-report/       # E2E test reports
+├── vitest.setup.ts          # Vitest setup file (jest-dom matchers)
 ├── commitlint.config.js     # Commit message rules
 ├── eslint.config.js         # Linting configuration (includes TanStack Query plugin)
-├── jest.config.js           # Unit test configuration
+├── vite.config.ts           # Vite and Vitest configuration
 ├── playwright.config.ts     # E2E test configuration
 ├── .prettierrc             # Code formatting rules
 └── package.json            # Dependencies and scripts
@@ -335,8 +335,9 @@ To improve this template for your organization:
 - [React Documentation](https://react.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Vite Guide](https://vitejs.dev/guide/)
-- [Jest Testing Framework](https://jestjs.io/)
+- [Vitest Testing Framework](https://vitest.dev/)
 - [Playwright Testing](https://playwright.dev/)
+- [Testing Library](https://testing-library.com/)
 - [Conventional Commits](https://conventionalcommits.org/)
 - [ESLint Rules](https://eslint.org/docs/rules/)
 - [Trivy Security Scanner](https://trivy.dev/)

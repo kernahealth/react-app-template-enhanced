@@ -36,7 +36,7 @@ export function Home() {
 
           <p>TypeScript support</p>
           <p>ESLint + Prettier configured</p>
-          <p>Jest unit testing</p>
+          <p>Vitest unit testing</p>
           <p>Playwright E2E testing</p>
           <p>Production build optimized</p>
           <p>Trivy security scanning</p>

@@ -96,7 +96,7 @@ export const orderHandlers = [
    * GET /api/orders
    * List all orders with optional filtering and pagination
    */
-  http.get('/api/orders', async ({ request }) => {
+  http.get('*/api/orders', async ({ request }) => {
     await delay(300);
 
     const url = new URL(request.url);
@@ -151,7 +151,7 @@ export const orderHandlers = [
    * GET /api/orders/:id
    * Get a single order by ID
    */
-  http.get('/api/orders/:id', async ({ params }) => {
+  http.get('*/api/orders/:id', async ({ params }) => {
     await delay(200);
 
     const { id } = params;
@@ -174,7 +174,7 @@ export const orderHandlers = [
    * POST /api/orders
    * Create a new order
    */
-  http.post('/api/orders', async ({ request }) => {
+  http.post('*/api/orders', async ({ request }) => {
     await delay(400);
 
     const body = (await request.json()) as Partial<Order>;
@@ -221,7 +221,7 @@ export const orderHandlers = [
    * PUT /api/orders/:id
    * Replace an order (full update)
    */
-  http.put('/api/orders/:id', async ({ params, request }) => {
+  http.put('*/api/orders/:id', async ({ params, request }) => {
     await delay(400);
 
     const { id } = params;
@@ -280,7 +280,7 @@ export const orderHandlers = [
    * PATCH /api/orders/:id
    * Update an order (partial update)
    */
-  http.patch('/api/orders/:id', async ({ params, request }) => {
+  http.patch('*/api/orders/:id', async ({ params, request }) => {
     await delay(400);
 
     const { id } = params;
@@ -325,7 +325,7 @@ export const orderHandlers = [
    * DELETE /api/orders/:id
    * Delete an order
    */
-  http.delete('/api/orders/:id', async ({ params }) => {
+  http.delete('*/api/orders/:id', async ({ params }) => {
     await delay(300);
 
     const { id } = params;
@@ -355,7 +355,7 @@ export const orderHandlers = [
    * DELETE /api/orders
    * Bulk delete orders
    */
-  http.delete('/api/orders', async ({ request }) => {
+  http.delete('*/api/orders', async ({ request }) => {
     await delay(400);
 
     const body = (await request.json()) as { ids: string[] };
@@ -383,7 +383,7 @@ export const orderHandlers = [
    * PATCH /api/orders/:id/status
    * Update order status (convenience endpoint)
    */
-  http.patch('/api/orders/:id/status', async ({ params, request }) => {
+  http.patch('*/api/orders/:id/status', async ({ params, request }) => {
     await delay(300);
 
     const { id } = params;

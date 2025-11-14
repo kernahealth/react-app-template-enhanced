@@ -1,3 +1,4 @@
+import { vi, type Mock } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Users } from './Users';
@@ -5,8 +6,8 @@ import { userService } from '../services/userService';
 import { toast } from 'sonner';
 
 // Mock dependencies
-jest.mock('../services/userService');
-jest.mock('sonner');
+vi.mock('../services/userService');
+vi.mock('sonner');
 
 const mockUsers = [
   {
@@ -39,7 +40,7 @@ describe('Users Component', () => {
         mutations: { retry: false },
       },
     });
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   const renderWithQuery = (component: React.ReactElement) => {
@@ -52,7 +53,7 @@ describe('Users Component', () => {
 
   describe('Loading and Error States', () => {
     it('displays loading state with skeleton', () => {
-      (userService.getUsers as jest.Mock).mockImplementation(
+      (userService.getUsers as Mock).mockImplementation(
         () => new Promise(() => {}) // Never resolves
       );
 
@@ -68,9 +69,7 @@ describe('Users Component', () => {
 
     it('displays error state with filters visible', async () => {
       const errorMessage = 'Failed to fetch users';
-      (userService.getUsers as jest.Mock).mockRejectedValue(
-        new Error(errorMessage)
-      );
+      (userService.getUsers as Mock).mockRejectedValue(new Error(errorMessage));
 
       renderWithQuery(<Users />);
 
@@ -89,7 +88,7 @@ describe('Users Component', () => {
 
   describe('User List Display', () => {
     beforeEach(() => {
-      (userService.getUsers as jest.Mock).mockResolvedValue({
+      (userService.getUsers as Mock).mockResolvedValue({
         data: mockUsers,
         meta: {
           total: 3,
@@ -139,13 +138,13 @@ describe('Users Component', () => {
   describe('Search Functionality', () => {
     it('makes API call with search parameter', async () => {
       // Initial load
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });
 
       // After search
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: [mockUsers[0]],
         meta: { total: 1, page: 1, limit: 10, totalPages: 1 },
       });
@@ -168,13 +167,13 @@ describe('Users Component', () => {
 
     it('shows no users found message when search has no results', async () => {
       // Initial load
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });
 
       // After search with no results
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: [],
         meta: { total: 0, page: 1, limit: 10, totalPages: 0 },
       });
@@ -197,13 +196,13 @@ describe('Users Component', () => {
   describe('Role Filter', () => {
     it('makes API call with role filter parameter', async () => {
       // Initial load
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });
 
       // After role filter
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: [mockUsers[0]],
         meta: { total: 1, page: 1, limit: 10, totalPages: 1 },
       });
@@ -227,7 +226,7 @@ describe('Users Component', () => {
 
   describe('Pagination', () => {
     it('shows pagination controls when there are multiple pages', async () => {
-      (userService.getUsers as jest.Mock).mockResolvedValue({
+      (userService.getUsers as Mock).mockResolvedValue({
         data: mockUsers,
         meta: { total: 25, page: 1, limit: 10, totalPages: 3 },
       });
@@ -245,13 +244,13 @@ describe('Users Component', () => {
 
     it('navigates to next page', async () => {
       // Page 1
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: mockUsers,
         meta: { total: 25, page: 1, limit: 10, totalPages: 3 },
       });
 
       // Page 2
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: [mockUsers[0]],
         meta: { total: 25, page: 2, limit: 10, totalPages: 3 },
       });
@@ -274,19 +273,19 @@ describe('Users Component', () => {
 
     it('navigates to previous page', async () => {
       // Page 1
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: mockUsers,
         meta: { total: 25, page: 1, limit: 10, totalPages: 3 },
       });
 
       // Page 2
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: [mockUsers[0]],
         meta: { total: 25, page: 2, limit: 10, totalPages: 3 },
       });
 
       // Back to Page 1
-      (userService.getUsers as jest.Mock).mockResolvedValueOnce({
+      (userService.getUsers as Mock).mockResolvedValueOnce({
         data: mockUsers,
         meta: { total: 25, page: 1, limit: 10, totalPages: 3 },
       });
@@ -319,7 +318,7 @@ describe('Users Component', () => {
 
   describe('User Selection', () => {
     beforeEach(() => {
-      (userService.getUsers as jest.Mock).mockResolvedValue({
+      (userService.getUsers as Mock).mockResolvedValue({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });
@@ -402,11 +401,11 @@ describe('Users Component', () => {
 
   describe('User Creation', () => {
     beforeEach(() => {
-      (userService.getUsers as jest.Mock).mockResolvedValue({
+      (userService.getUsers as Mock).mockResolvedValue({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });
-      (userService.createUser as jest.Mock).mockResolvedValue({
+      (userService.createUser as Mock).mockResolvedValue({
         id: '4',
         name: 'New User',
         email: 'new@example.com',
@@ -498,11 +497,11 @@ describe('Users Component', () => {
 
   describe('User Editing', () => {
     beforeEach(() => {
-      (userService.getUsers as jest.Mock).mockResolvedValue({
+      (userService.getUsers as Mock).mockResolvedValue({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });
-      (userService.updateUser as jest.Mock).mockResolvedValue({
+      (userService.updateUser as Mock).mockResolvedValue({
         id: '1',
         name: 'Updated Name',
         email: 'john@example.com',
@@ -563,11 +562,11 @@ describe('Users Component', () => {
 
   describe('User Deletion', () => {
     beforeEach(() => {
-      (userService.getUsers as jest.Mock).mockResolvedValue({
+      (userService.getUsers as Mock).mockResolvedValue({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });
-      (userService.deleteUser as jest.Mock).mockResolvedValue({});
+      (userService.deleteUser as Mock).mockResolvedValue({});
     });
 
     it('deletes user after confirmation', async () => {
@@ -640,11 +639,11 @@ describe('Users Component', () => {
 
   describe('Bulk Delete', () => {
     beforeEach(() => {
-      (userService.getUsers as jest.Mock).mockResolvedValue({
+      (userService.getUsers as Mock).mockResolvedValue({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });
-      (userService.bulkDeleteUsers as jest.Mock).mockResolvedValue({
+      (userService.bulkDeleteUsers as Mock).mockResolvedValue({
         message: '2 users deleted successfully',
         deletedCount: 2,
       });
@@ -732,11 +731,11 @@ describe('Users Component', () => {
     });
 
     it('handles bulk delete error', async () => {
-      (userService.getUsers as jest.Mock).mockResolvedValue({
+      (userService.getUsers as Mock).mockResolvedValue({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });
-      (userService.bulkDeleteUsers as jest.Mock).mockRejectedValue(
+      (userService.bulkDeleteUsers as Mock).mockRejectedValue(
         new Error('Failed to delete')
       );
 
@@ -780,7 +779,7 @@ describe('Users Component', () => {
 
   describe('Modal Interactions', () => {
     beforeEach(() => {
-      (userService.getUsers as jest.Mock).mockResolvedValue({
+      (userService.getUsers as Mock).mockResolvedValue({
         data: mockUsers,
         meta: { total: 3, page: 1, limit: 10, totalPages: 1 },
       });

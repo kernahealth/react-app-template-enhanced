@@ -52,7 +52,7 @@ export class ErrorBoundary extends Component<
     // Error details logged to error reporting service
 
     // In production, you might want to send this to an error reporting service
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       // Example: Send to error reporting service
       // errorReportingService.report(error, errorInfo);
     }
@@ -407,10 +407,9 @@ export const AppErrorBoundary: React.FC<{ children: ReactNode }> = ({
   children,
 }) => (
   <ErrorBoundary
-    showErrorDetails={process.env.NODE_ENV === 'development'}
+    showErrorDetails={import.meta.env.DEV}
     onError={(error, errorInfo) => {
       // Global error logging handled by error boundary
-      // eslint-disable-next-line no-console
       console.error('Error caught by boundary:', error, errorInfo);
     }}
   >
